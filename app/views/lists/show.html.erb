@@ -1,0 +1,26 @@
+<div class="container">
+  <%= @list.name  %>
+  <p>Bookmarks</p>
+  <%= simple_form_for [@list, @bookmark] do |f| %>
+    <div class="form-group">
+      <%= f.input :comment, label: "Comment" %>
+      <%= f.association :movie, label: "Movie" %>
+      <%= f.button :submit, "Add Bookmark" %>
+    </div>
+  <% end %>
+
+  <ul>
+    <% @list.bookmarks.each do |bookmark| %>
+      <li>
+        <strong>Movie:</strong> <%= bookmark.movie.title %><br>
+        <strong>Comment:</strong> <%= bookmark.comment %><br>
+        <%= link_to "Delete Bookmark", bookmark_path(bookmark), class: "text-danger",
+        data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete " } %>
+
+      </li>
+    <% end %>
+  </ul>
+
+
+  <%= link_to "Back to Home", lists_path, class: "btn btn-secondary" %>
+</div>
